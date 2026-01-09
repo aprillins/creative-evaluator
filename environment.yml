@@ -1,0 +1,13 @@
+name: creative-evaluator
+channels:
+ - defaults
+ - conda-forge
+dependencies:
+ - python=3.11
+ - chromadb
+ - langchain-core
+ - langchain-community
+ - langchain-openai
+ - gradio
+ - python-dotenv
+ - pip

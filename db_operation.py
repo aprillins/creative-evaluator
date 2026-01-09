@@ -5,11 +5,14 @@ from langchain_openai import ChatOpenAI
 import base64
 from io import BytesIO
 from PIL import Image
+import os
 
-chroma_tenant="aaa"
-chroma_database="aaa"
-chroma_api_key="aaa"
-collection_name="yugero"
+openai_api_key = os.getenv("OPENAI_API_KEY")
+chromadb_api_key = os.getenv("CHROMA_API_KEY")
+chromadb_host = os.getenv("CHROMA_HOST")
+chromadb_tenant = os.getenv("CHROMA_TENANT")
+chromadb_database = os.getenv("CHROMA_DATABASE")
+
 
 embeddings = OpenAIEmbeddings()
 
@@ -19,9 +22,9 @@ def connect_to_chroma_cloud():
     Connect to chroma cloud and return chroma instance
     """
     cloud_client = CloudClient(
-        tenant=chroma_tenant,
-        database=chroma_database,
-        api_key=chroma_api_key
+        tenant=chromadb_tenant,
+        database=chromadb_database,
+        api_key=chromadb_api_key
     )
     return cloud_client
 

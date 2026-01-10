@@ -22,3 +22,7 @@ Don't forget to click save and deploy
 # ACCESSING
 After the page is published you can go to the page and access `/main`
 
+# HOW TO RUN LOCALLY
+There are two ways to run this program locally:
+A. Using `python main.py`
+B. Using `uvicorn --run:app --reload`

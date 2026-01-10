@@ -11,17 +11,20 @@ import base64
 from io import BytesIO
 from PIL import Image
 from pydantic import BaseModel, Field
+import json
 
 load_dotenv()
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
-llm = ChatOpenAI(model="gpt-4.1-mini")
+llm = ChatOpenAI(model="gpt-4.1")
 
 
 class ImageReadingResult(BaseModel):
     description: str = Field(..., description="Detailed description of the image content.")
     type_of_promotion: Literal["Acquisition", "Retention", "Others", "Unclear"] = Field(..., description="Type of promotion depicted in the image.")
     promo_font_size_readability: Literal["Small", "Medium", "Large", "Unclear"] = Field(..., description="Assessment of promo font size readability compared to the whole image.")
+    promo_value: str = Field(..., description="What is the amount of promo that pintu offer?")
+    promo_term: Literal["Trade for the first time", "Invite friends", "Existing users should trade", "Both first time trading users and existing users should trade to get the reward", "Unclear"] = Field(..., description="What should user do to get the promo?")
 
 
 def get_basic_image_info(img: Image.Image):
@@ -92,16 +95,16 @@ def evaluate_creativity(image: Image.Image) -> str:
             structured_response = llm_with_structured_response.invoke(messages)
         except Exception as e:
             print(f"Error invoking LLM: {e}")
-            return f"Error processing image: {e}"
-
-        return structured_response
+            return f"Error processing image: {e}"        
+        return "```json\n" + structured_response.model_dump_json(indent=2) + "\n```"
+    
     else:
         return "No image uploaded."
 
 demo = gr.Interface(
     fn=evaluate_creativity,
     inputs=gr.Image(type="pil", label="Upload an Image"),
-    outputs=gr.Textbox(label="Evaluation Result", lines=10),
+    outputs=gr.Markdown(label="Evaluation Result", ),
     title="Creative Evaluator",
     description="Upload an image to evaluate its creativity."
 )

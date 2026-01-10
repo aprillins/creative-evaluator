@@ -13,7 +13,6 @@ chromadb_host = os.getenv("CHROMA_HOST")
 chromadb_tenant = os.getenv("CHROMA_TENANT")
 chromadb_database = os.getenv("CHROMA_DATABASE")
 
-
 embeddings = OpenAIEmbeddings()
 
 def connect_to_chroma_cloud():

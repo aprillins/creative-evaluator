@@ -104,7 +104,7 @@ def evaluate_creativity(image: Image.Image) -> str:
 demo = gr.Interface(
     fn=evaluate_creativity,
     inputs=gr.Image(type="pil", label="Upload an Image"),
-    outputs=gr.Markdown(label="Evaluation Result", ),
+    outputs=gr.Markdown(label="Evaluation Result", min_height=150),
     title="Creative Evaluator",
     description="Upload an image to evaluate its creativity."
 )

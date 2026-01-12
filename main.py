@@ -16,14 +16,17 @@ import json
 load_dotenv()
 
 openai_api_key = os.getenv("OPENAI_API_KEY")
+brand_name = os.getenv("BRAND_NAME")  
+brand_description = os.getenv("BRAND_DESCRIPTION") 
+
 llm = ChatOpenAI(model="gpt-4.1")
 
-
 class ImageReadingResult(BaseModel):
-    description: str = Field(..., description="Detailed description of the image content.")
-    type_of_promotion: Literal["Acquisition", "Retention", "Others", "Unclear"] = Field(..., description="Type of promotion depicted in the image.")
+    description: str = Field(..., description="Detailed description of the image content if only the image is related to a {brand_name} promotional creative. If not related, answer with 'ABORTED OPERATION'.")
+    brand: str = Field(..., description="Identify the brand depicted in the image.")
+    type_of_promotion: Literal["Acquisition", "Retention", "Others", "Not a promo"] = Field(..., description="Type of promotion depicted in the image if it's a promotional image/message.")
     promo_font_size_readability: Literal["Small", "Medium", "Large", "Unclear"] = Field(..., description="Assessment of promo font size readability compared to the whole image.")
-    promo_value: str = Field(..., description="What is the amount of promo that pintu offer?")
+    promo_value: str = Field(..., description="What is the amount of promo that {brand_name} offer?")
     promo_term: Literal["Trade for the first time", "Invite friends", "Existing users should trade", "Both first time trading users and existing users should trade to get the reward", "Unclear"] = Field(..., description="What should user do to get the promo?")
 
 
@@ -60,20 +63,28 @@ def evaluate_creativity(image: Image.Image) -> str:
         img_info = img['info']  
         message = SystemMessage(
             content = """
-            You are a ad creative evaluator. You give a detailed assessment of ad creative readability.
-            Imagine you are a user seeing this image for the first time. You should ask yourself these questions:
-            1. Is the message clear?
-            2. Is the font size appropriate?
-            3. Are the text colors contrasting well with the background?
-            4. Is the safe zone already applied?
-            5. Do you understand the meaning of the image?
-            6. What type of promotion is this? (Acquisition, Retention, Others, Unclear)
+            You are a ad creative evaluator. You give a detailed assessment of ad creative readability and understandability for the {brand_name} brand.
+            Imagine you are a user seeing an image provided for the first time.
+            YOU ANSWER WITH "brand is not {brand_name}" if the creative is not a promotional creative created by {brand_name} brand.
             """)
         messages: list[SystemMessage | HumanMessage] = [message]
 
         message = HumanMessage(
             content = [
-                {"type": "text", "text": f"What is in this image? Describe it in detail. Additionally, it has the following properties:\n{img_info}"},
+                {"type": "text", "text": f"""
+                What is in this image? Describe it in detail. Additionally, it has the following properties:\n{img_info}
+                First you have to determine if the creative is a promotional creative created by a {brand_name} brand or not. {brand_description}.
+                If you find that the creative is a promotional creative created by {brand_name} brand, then you have to answer the following questions about the promotional creative readability and understandability.
+                If the creative is not a promotional creative from {brand_name} brand. Then you answer with "ABORTED OPERATION" only
+                Also, you should ask yourself these questions:
+                    1. Is the message clear?
+                    2. Is the font size appropriate?
+                    3. Are the text colors contrasting well with the background?
+                    4. Is the safe zone already applied?
+                    5. Do you understand the meaning of the image?
+                    6. Does the creative show any promotional messages?
+                    7. If you the creative show promotional message, then what type of promotion is this? Is it acquisition, Retention, Others, or Unclear?
+                """},
                 {"type": "image", "base64": img_b64, "mime_type": "image/jpeg"}
             ]
         )

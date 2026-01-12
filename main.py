@@ -69,7 +69,7 @@ def evaluate_creativity(image: Image.Image) -> str:
             5. Do you understand the meaning of the image?
             6. What type of promotion is this? (Acquisition, Retention, Others, Unclear)
             """)
-        messages = [message]
+        messages: list[SystemMessage | HumanMessage] = [message]
 
         message = HumanMessage(
             content = [

@@ -1,0 +1,29 @@
+{
+    "editor.inlineSuggest.enabled": true,
+    "editor.accessibilitySupport": "off",
+    "explorer.confirmDelete": false,
+    "files.autoSave": "onFocusChange",
+    "workbench.settings.applyToAllProfiles": [
+        "typescript.tsserver.web.projectWideIntellisense.enabled"
+    ],
+    "files.associations": {
+        "*.tsx": "typescript"
+    },
+    "typescript.preferences.includePackageJsonAutoImports": "on",
+    "typescript.preferences.preferTypeOnlyAutoImports": true,
+    "[typescript]": {},
+    "editor.minimap.enabled": false,
+    "python.createEnvironment.trigger": "off",
+    "python.analysis.typeCheckingMode": "standard",
+    "terminal.integrated.inheritEnv": false,
+    "[python]": {
+
+
+
+
+        "diffEditor.ignoreTrimWhitespace": false,
+        "editor.defaultColorDecorators": "never",
+        "editor.formatOnType": true,
+        "editor.wordBasedSuggestions": "off"
+    }
+}

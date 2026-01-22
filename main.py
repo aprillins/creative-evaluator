@@ -99,34 +99,14 @@ def evaluate_creativity(image: Image.Image) -> str:
         img_info = img['info']  
         message = SystemMessage(
             content = """
-<<<<<<< HEAD
-            You are a ad creative evaluator. You give a detailed assessment of ad creative readability and understandability for the {brand_name} brand.
-            Imagine you are a user seeing an image provided for the first time.
-            YOU ANSWER WITH "brand is not {brand_name}" if the creative is not a promotional creative created by {brand_name} brand.
-=======
                 You are a promotional image analyst. You act as a person who sees a promotional image for the first time. 
                 Your purpose is to analyze and give the reasons whether a promotional image is understandable or not.
->>>>>>> 72e5099 (improve model)
             """)
         messages: list[SystemMessage | HumanMessage] = [message]
 
         message = HumanMessage(
             content = [
                 {"type": "text", "text": f"""
-<<<<<<< HEAD
-                What is in this image? Describe it in detail. Additionally, it has the following properties:\n{img_info}
-                First you have to determine if the creative is a promotional creative created by a {brand_name} brand or not. {brand_description}.
-                If you find that the creative is a promotional creative created by {brand_name} brand, then you have to answer the following questions about the promotional creative readability and understandability.
-                If the creative is not a promotional creative from {brand_name} brand. Then you answer with "ABORTED OPERATION" only
-                Also, you should ask yourself these questions:
-                    1. Is the message clear?
-                    2. Is the font size appropriate?
-                    3. Are the text colors contrasting well with the background?
-                    4. Is the safe zone already applied?
-                    5. Do you understand the meaning of the image?
-                    6. Does the creative show any promotional messages?
-                    7. If you the creative show promotional message, then what type of promotion is this? Is it acquisition, Retention, Others, or Unclear?
-=======
                     Based on the provided image give your analysis and scoring (0-10) regarding the following items:
                     - Is the content and context in the image understandable?
                     - Brand name clarity
@@ -147,7 +127,6 @@ def evaluate_creativity(image: Image.Image) -> str:
                     - Is it understandable for people who see it for the first time and never interact with the brand
                     Give suggestions to improve the promotional image if any.
                     Additional image info: \n{img_info}
->>>>>>> 72e5099 (improve model)
                 """},
                 {"type": "image", "base64": img_b64, "mime_type": "image/jpeg"}
             ]

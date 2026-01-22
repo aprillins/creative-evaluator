@@ -22,15 +22,6 @@ brand_description = os.getenv("BRAND_DESCRIPTION")
 
 llm = ChatOpenAI(model="gpt-4.1")
 
-<<<<<<< HEAD
-class ImageReadingResult(BaseModel):
-    description: str = Field(..., description="Detailed description of the image content if only the image is related to a {brand_name} promotional creative. If not related, answer with 'ABORTED OPERATION'.")
-    brand: str = Field(..., description="Identify the brand depicted in the image.")
-    type_of_promotion: Literal["Acquisition", "Retention", "Others", "Not a promo"] = Field(..., description="Type of promotion depicted in the image if it's a promotional image/message.")
-    promo_font_size_readability: Literal["Small", "Medium", "Large", "Unclear"] = Field(..., description="Assessment of promo font size readability compared to the whole image.")
-    promo_value: str = Field(..., description="What is the amount of promo that {brand_name} offer?")
-    promo_term: Literal["Trade for the first time", "Invite friends", "Existing users should trade", "Both first time trading users and existing users should trade to get the reward", "Unclear"] = Field(..., description="What should user do to get the promo?")
-=======
 class ImageReadingResult(BaseModel):    
     # Categoricals
     type_of_promotion: Literal["Acquisition", "Retention", "Others", "Unclear"] = Field(..., description="Type of promotion depicted in the image. Do not assume, if it's unclear it's unclear")
@@ -51,7 +42,6 @@ class ImageReadingResult(BaseModel):
         None, 
         description="Optional detailed scores per aspect (0-10), for example: {'brand_name_clarity': 8, 'promo_value_highlight': 9, ...}"
     )
->>>>>>> 72e5099 (improve model)
 
     # Optional: Comments or Recommendations
     recommendation: Optional[str] = Field(None, description="Recommendations for improvement or observation notes.")

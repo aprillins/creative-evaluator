@@ -22,6 +22,7 @@ class ImageReadingResult(BaseModel):
     type_of_promotion: Literal["Acquisition", "Retention", "Others", "Unclear"] = Field(..., description="Type of promotion depicted in the image. Do not assume, if it's unclear it's unclear")
     promo_font_size_readability: Literal["Small", "Medium", "Large", "Unclear"] = Field(..., description="Assessment of promo font size readability compared to the overall image.")
     promo_value: Optional[Dict[str, int]] = Field(None, description="What is the promo value offered?")
+    brand_name: str = Field(..., description="Main brand name in the image. If not available put none")
     promo_term: Literal[
         "Trade for the first time",
         "Invite friends",

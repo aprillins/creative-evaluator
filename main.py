@@ -2,17 +2,12 @@ import os
 from typing import Dict, Literal, Optional
 from dotenv import load_dotenv
 import gradio as gr
-from langchain.agents import create_agent
-import langchain_core
-from langsmith import Client
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_core.prompts import ChatPromptTemplate
 from langchain_openai import ChatOpenAI
 import base64
 from io import BytesIO
 from PIL import Image
 from pydantic import BaseModel, Field
-import json
 
 load_dotenv()
 

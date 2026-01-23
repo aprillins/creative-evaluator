@@ -25,9 +25,13 @@ class ImageReadingResult(BaseModel):
     brand_name: str = Field(..., description="Main brand name in the image. If not available put none")
     promo_term: Literal[
         "Trade for the first time",
+        "Register",
+        "KYC",
+        "Deposit",
+        "Use feature",
         "Invite friends",
         "Existing users should trade",
-        "Both first time trading users and existing users should trade to get the reward",
+        "Both first time trading users and existing users can trade to get the reward",
         "Unclear"
     ] = Field(..., description="What should the user do to get the promo?")
     creative_size: Optional[Dict[str, int]] = Field(..., description="size in pixel width and height")
